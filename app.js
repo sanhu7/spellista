@@ -206,4 +206,40 @@ class PlaylistView {
       </section>
     `;
     }
+
+
+    //song tree
+    buildSongTree(grouped, playlistId, isEmpty) {
+        if (isEmpty) {
+            return `<p style="padding:2rem;text-align:center;color:#888;">
+        Inga låtar ännu — tryck på <strong>Lägg till låt</strong>!
+      </p>`;
+        }
+
+        return Object.entries(grouped).map(([genre, artistMap]) => {
+            const artistsHTML = Object.entries(artistMap).map(([artist, songs]) => {
+                const songsHTML = songs.map((song, i) => `
+          <div class="song-row">
+            <span class="song-index">${i + 1}</span>
+            <span class="song-title">${song.title}</span>
+            <span class="song-duration">${song.duration}</span>
+            <button class="song-delete"
+                    data-delete-song="${song.id}"
+                    data-playlist="${playlistId}">✕</button>
+          </div>`).join('');
+
+                return `
+          <div class="artist-group">
+            <div class="artist-header">👤 ${artist}</div>
+            <div class="artist-body">${songsHTML}</div>
+          </div>`;
+            }).join('');
+
+            return `
+        <div class="genre-group">
+          <div class="genre-header">🎵 ${genre}</div>
+          <div class="genre-body">${artistsHTML}</div>
+        </div>`;
+        }).join('');
+    }
 }
