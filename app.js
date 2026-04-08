@@ -1,5 +1,7 @@
 'use strict';
 
+const { listeners } = require("node:cluster");
+
 class PlaylistModel {
     playlists = [];
     nextId = 1;
@@ -9,12 +11,13 @@ class PlaylistModel {
     constructor() {
         console.log('PlaylistModel skapad!');
     }
-}
 
-subscribe(listener) {
-    this.listeners.push(listener);
-}
 
-notify(event, data) {
-    this.listeners.forEach(fn => fn(event, data));
+    subscribe(listener) {
+        this.listeners.push(listener);
+    }
+
+    notify(event, data) {
+        this.listeners.forEach(fn => fn(event, data));
+    }
 }
