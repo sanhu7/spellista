@@ -20,4 +20,20 @@ class PlaylistModel {
     notify(event, data) {
         this.listeners.forEach(fn => fn(event, data));
     }
+
+    //create playlist
+
+    createPlaylist(name, description = '') {
+        const playlist = {
+            id: this.nextId++,
+            name: name.trim(),
+            description: description.trim(),
+            songs: [],
+            createdAt: new Date(),
+            emoji: '🎵',
+        };
+        this.playlists.push(playlist);
+        this.notify('playlistCreated', playlist);
+        return playlist;
+    }
 }
