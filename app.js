@@ -242,4 +242,75 @@ class PlaylistView {
         </div>`;
         }).join('');
     }
+
+
+
+    //skapa spellista + lägg till låt
+    showCreatePlaylistModal() {
+        this.openModal(`
+      <h2 class="modal-title">Ny Spellista</h2>
+      <form id="modalForm">
+        <div class="form-group">
+          <label class="form-label">Namn</label>
+          <input class="form-input" id="inputName" type="text" placeholder="T.ex. Sommarvibes">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Beskrivning</label>
+          <input class="form-input" id="inputDesc" type="text" placeholder="Valfri beskrivning…">
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-ghost" data-modal-close>Avbryt</button>
+          <button type="submit" class="btn btn-primary">Skapa</button>
+        </div>
+      </form>
+    `);
+        document.getElementById('inputName').focus();
+        return document.getElementById('modalForm');
+    }
+
+    showAddSongModal(playlistId) {
+        this.openModal(`
+      <h2 class="modal-title">Lägg till låt</h2>
+      <form id="modalForm" data-playlist-id="${playlistId}">
+        <div class="form-group">
+          <label class="form-label">Låttitel</label>
+          <input class="form-input" id="songTitle" type="text" placeholder="T.ex. Blinding Lights">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Artist</label>
+          <input class="form-input" id="songArtist" type="text" placeholder="T.ex. The Weeknd">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Genre</label>
+          <input class="form-input" id="songGenre" type="text" placeholder="T.ex. Pop">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Längd</label>
+          <input class="form-input" id="songDuration" type="text" placeholder="T.ex. 3:45">
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-ghost" data-modal-close>Avbryt</button>
+          <button type="submit" class="btn btn-primary">Lägg till</button>
+        </div>
+      </form>
+    `);
+        document.getElementById('songTitle').focus();
+        return document.getElementById('modalForm');
+    }
+
+    openModal(html) {
+        this.hideModal();
+        const overlay = document.createElement('div');
+        overlay.className = 'modal-overlay';
+        overlay.innerHTML = `<div class="modal">${html}</div>`;
+        document.body.appendChild(overlay);
+        this.modal = overlay;
+        overlay.addEventListener('click', e => {
+            if (e.target === overlay) this.hideModal();
+        });
+    }
+
+    hideModal() {
+        if (this.modal) { this.modal.remove(); this.modal = null; }
+    }
 }
