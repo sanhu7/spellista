@@ -36,4 +36,10 @@ class PlaylistModel {
         this.notify('playlistCreated', playlist);
         return playlist;
     }
+
+    //delete playlist
+    deletePlaylist(id) {
+        this.playlists = this.playlists.filter(p => p.id !== id);
+        this.notify('playlistDeleted', id);
+    }
 }
