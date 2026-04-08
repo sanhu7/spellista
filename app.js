@@ -176,4 +176,34 @@ class PlaylistView {
       </div>
     `).join('');
     }
+
+    //spellistans detaljer
+    renderPlaylistDetail(playlist, grouped) {
+        const totalSongs = playlist.songs.length;
+        const genres = Object.keys(grouped).length;
+
+        this.main.innerHTML = `
+      <section class="playlist-detail">
+        <div class="playlist-hero">
+          <div class="playlist-cover">${playlist.emoji}</div>
+          <div class="playlist-hero-info">
+            <p class="playlist-type-label">Spellista</p>
+            <h1 class="playlist-hero-name">${playlist.name}</h1>
+            <p class="playlist-hero-desc">${playlist.description || 'Ingen beskrivning'}</p>
+            <div class="playlist-stats">
+              <span><strong>${genres}</strong> genrer</span>
+              <span><strong>${totalSongs}</strong> låtar</span>
+            </div>
+            <div class="playlist-actions">
+              <button class="btn btn-primary" id="btnAddSong">+ Lägg till låt</button>
+              <button class="btn btn-danger" id="btnDeletePlaylist">🗑 Ta bort lista</button>
+            </div>
+          </div>
+        </div>
+        <div id="songTree">
+          ${this.buildSongTree(grouped, playlist.id, totalSongs === 0)}
+        </div>
+      </section>
+    `;
+    }
 }
