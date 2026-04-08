@@ -66,4 +66,26 @@ class PlaylistModel {
         playlist.songs = playlist.songs.filter(s => s.id !== songId);
         this.notify('songDeleted', { playlistId, songId });
     }
+
+
+    //metoder: getById, getAll, getSongsGrouped
+    getById(id) {
+        return this.playlists.find(p => p.id === id);
+    }
+
+    getAll() {
+        return [...this.playlists];
+    }
+
+    getSongsGrouped(playlistId) {
+        const playlist = this.getById(playlistId);
+        if (!playlist) return {};
+        const grouped = {};
+        for (const song of playlist.songs) {
+            if (!grouped[song.genre]) grouped[song.genre] = {};
+            if (!grouped[song.genre][song.artist]) grouped[song.genre][song.artist] = [];
+            grouped[song.genre][song.artist].push(song);
+        }
+        return grouped;
+    }
 }
