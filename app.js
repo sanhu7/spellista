@@ -119,3 +119,37 @@ class PlaylistModel {
         this.addSong(p2.id, { title: 'Till I Collapse', artist: 'Eminem', genre: 'Hip-Hop', duration: '4:57' });
     }
 }
+
+//playlist view
+class PlaylistView {
+    app;
+    main;
+    modal = null;
+
+    constructor(appId) {
+        this.app = document.getElementById(appId);
+        this.buildShell();
+    }
+
+    buildShell() {
+        this.app.innerHTML = `
+      <header class="app-header">
+        <div class="header-brand">🎵 Spellista Manager</div>
+      </header>
+      <aside class="app-sidebar" id="sidebar">
+        <div class="sidebar-header">
+          <p class="sidebar-title">Spellistor</p>
+          <button class="btn-new-playlist" id="btnNewPlaylist">+ Ny Spellista</button>
+        </div>
+        <div class="playlist-list" id="playlistList"></div>
+      </aside>
+      <main class="app-main" id="mainContent">
+        <div class="welcome-state">
+          <h2>Välkommen!</h2>
+          <p>Välj eller skapa en spellista.</p>
+        </div>
+      </main>
+    `;
+        this.main = document.getElementById('mainContent');
+    }
+}
