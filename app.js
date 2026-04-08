@@ -152,4 +152,28 @@ class PlaylistView {
     `;
         this.main = document.getElementById('mainContent');
     }
+
+    //sidebar lista
+    renderPlaylists(playlists, activeId, filter = '') {
+        const list = document.getElementById('playlistList');
+        const filtered = filter
+            ? playlists.filter(p => p.name.toLowerCase().includes(filter.toLowerCase()))
+            : playlists;
+
+        if (filtered.length === 0) {
+            list.innerHTML = `<p style="padding:1rem;color:#888;">Inga spellistor hittades</p>`;
+            return;
+        }
+
+        list.innerHTML = filtered.map(p => `
+      <div class="playlist-item ${p.id === activeId ? 'active' : ''}"
+           data-playlist-id="${p.id}">
+        <div class="playlist-item-icon">${p.emoji}</div>
+        <div class="playlist-item-info">
+          <div class="playlist-item-name">${p.name}</div>
+          <div class="playlist-item-count">${p.songs.length} låtar</div>
+        </div>
+      </div>
+    `).join('');
+    }
 }
