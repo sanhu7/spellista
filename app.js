@@ -42,4 +42,20 @@ class PlaylistModel {
         this.playlists = this.playlists.filter(p => p.id !== id);
         this.notify('playlistDeleted', id);
     }
+
+    //add song
+    addSong(playlistId, { title, artist, genre, duration = '' }) {
+        const playlist = this.getById(playlistId);
+        if (!playlist) return null;
+        const song = {
+            id: this.nextSongId++,
+            title: title.trim(),
+            artist: artist.trim(),
+            genre: genre.trim(),
+            duration: duration.trim(),
+        };
+        playlist.songs.push(song);
+        this.notify('songAdded', { playlist, song });
+        return song;
+    }
 }
