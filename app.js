@@ -45,7 +45,7 @@ class PlaylistModel {
             description: description.trim(),
             songs: [],
             createdAt: new Date(),
-            emoji: '🎵',
+            emoji: this.randomEmoji(),
         };
         this.playlists.push(playlist);
         this.notify('playlistCreated', playlist);
@@ -102,5 +102,20 @@ class PlaylistModel {
             grouped[song.genre][song.artist].push(song);
         }
         return grouped;
+    }
+
+    //randomemoji,seedData
+    randomEmoji() {
+        const pool = ['🎵', '🎶', '🎸', '🎹', '🎺', '🥁', '🎷', '🎻', '🎤', '🎧'];
+        return pool[Math.floor(Math.random() * pool.length)];
+    }
+
+    seedData() {
+        const p1 = this.createPlaylist('Favoriter', 'Mina bästa låtar');
+        this.addSong(p1.id, { title: 'Bohemian Rhapsody', artist: 'Queen', genre: 'Rock', duration: '5:55' });
+        this.addSong(p1.id, { title: 'Blinding Lights', artist: 'The Weeknd', genre: 'Pop', duration: '3:22' });
+
+        const p2 = this.createPlaylist('Träningsmusik', 'Energi för gymmet');
+        this.addSong(p2.id, { title: 'Till I Collapse', artist: 'Eminem', genre: 'Hip-Hop', duration: '4:57' });
     }
 }
