@@ -313,4 +313,15 @@ class PlaylistView {
     hideModal() {
         if (this.modal) { this.modal.remove(); this.modal = null; }
     }
+
+
+    //toast-notis
+    showToast(message) {
+        const container = document.getElementById('toastContainer');
+        const toast = document.createElement('div');
+        toast.className = 'toast';
+        toast.textContent = message;
+        container.appendChild(toast);
+        setTimeout(() => toast.remove(), 3000);
+    }
 }
