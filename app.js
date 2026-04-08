@@ -1,5 +1,6 @@
 'use strict';
 
+
 const { listeners } = require("node:cluster");
 
 class PlaylistModel {
@@ -9,9 +10,23 @@ class PlaylistModel {
     listeners = [];
 
     constructor() {
-        console.log('PlaylistModel skapad!');
+        const saved = this.loadFromStorage();
+        if (saved.length > 0) {
+            this.playlists = saved;
+        } else {
+            this.seedData();
+        }
     }
 
+    //localStorage
+    saveToStorage() {
+        localStorage.setItem('playlists', JSON.stringify(this.playlists));
+    }
+
+    loadFromStorage() {
+        const saved = localStorage.getItem('playlists');
+        return saved ? JSON.parse(saved) : [];
+    }
 
     subscribe(listener) {
         this.listeners.push(listener);
