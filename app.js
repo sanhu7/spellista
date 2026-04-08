@@ -58,4 +58,12 @@ class PlaylistModel {
         this.notify('songAdded', { playlist, song });
         return song;
     }
+
+    //delete song
+    deleteSong(playlistId, songId) {
+        const playlist = this.getById(playlistId);
+        if (!playlist) return;
+        playlist.songs = playlist.songs.filter(s => s.id !== songId);
+        this.notify('songDeleted', { playlistId, songId });
+    }
 }
